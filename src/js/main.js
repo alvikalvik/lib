@@ -1,3 +1,8 @@
 import './lib/lib';
+import $ from './lib/lib';
 
-$('.active').addClass('hello', 'world').toggleClass('adsf');
+$('button').on('click', function() {
+    $(this).hide().show().toggleClass('active');
+});
+
+
