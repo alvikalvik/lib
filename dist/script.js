@@ -134,6 +134,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_display__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/display */ "./src/js/lib/modules/display.js");
 /* harmony import */ var _modules_classes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/classes */ "./src/js/lib/modules/classes.js");
 /* harmony import */ var _modules_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/actions */ "./src/js/lib/modules/actions.js");
+/* harmony import */ var _modules_attribute__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/attribute */ "./src/js/lib/modules/attribute.js");
+
 
 
 
@@ -184,6 +186,60 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.click = function (handle
       this[i].click();
     } else {
       this[i].addEventListener('click', handler);
+    }
+  }
+
+  return this;
+};
+
+/***/ }),
+
+/***/ "./src/js/lib/modules/attribute.js":
+/*!*****************************************!*\
+  !*** ./src/js/lib/modules/attribute.js ***!
+  \*****************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.setAttribute = function (attribute, value) {
+  for (let i = 0; i < this.length; i++) {
+    if (!this[i].tagName) {
+      continue;
+    }
+
+    this[i].setAttribute(attribute, value);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.removeAttribute = function (attribute) {
+  for (let i = 0; i < this.length; i++) {
+    if (!this[i].tagName) {
+      continue;
+    }
+
+    this[i].removeAttribute(attribute);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.toggleAttribute = function (attribute, value = '') {
+  for (let i = 0; i < this.length; i++) {
+    if (!this[i].tagName) {
+      continue;
+    }
+
+    if (this[i].hasAttribute(attribute)) {
+      this[i].removeAttribute(attribute);
+    } else {
+      this[i].setAttribute(attribute, value);
     }
   }
 
@@ -310,8 +366,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/lib */ "./src/js/lib/lib.js");
 
 
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').setAttribute('data-aaa', 'data-value');
 Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').on('click', function () {
-  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])(this).hide().show().toggleClass('active');
+  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])(this).toggleAttribute('data-aaa', 'data-value');
 });
 
 /***/ })
