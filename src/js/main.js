@@ -1,10 +1,19 @@
 import './lib/lib';
 import $ from './lib/lib';
 
-$('button').setAttribute('data-aaa', 'data-value');
+// $('button').setAttribute('data-aaa', 'data-value');
 
 $('button').on('click', function() {
-    $(this).toggleAttribute('data-aaa', 'data-value');
+    $('div').eq(2).toggleClass('active');
 });
 
+$('div').click(function() {
+    console.log($(this).index());
+});
 
+// console.log($('div').eq(2).find('.some'));
+console.log($('.some').eq(1).siblings());
+
+// console.log($('button').html('1223'));
+
+// console.log($('div').eq(4));
