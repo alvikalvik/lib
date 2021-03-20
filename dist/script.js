@@ -563,20 +563,14 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.click = function (handle
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/lib */ "./src/js/lib/lib.js");
 
- // $('button').setAttribute('data-aaa', 'data-value');
-
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').on('click', function () {
-  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').eq(2).toggleClass('active');
+$('#first').on('click', () => {
+  $('div').eq(1).fadeOut(800);
 });
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').click(function () {
-  console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])(this).index());
-}); // console.log($('div').eq(2).find('.some'));
-// console.log($('.some').eq(1).siblings());
-// console.log($('button').html('1223'));
-// console.log($('div').eq(4));
-
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').fadeOut(1800, () => {
-  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').fadeIn(1800);
+$('[data-count="second"]').on('click', () => {
+  $('div').eq(2).fadeOut(800);
+});
+$('button').eq(2).on('click', () => {
+  $('.w-500').fadeOut(800);
 });
 
 /***/ })
