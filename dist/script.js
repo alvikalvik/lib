@@ -123,7 +123,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
 
 
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.modal = function () {
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.modal = function (isCreated = false) {
   for (let i = 0; i < this.length; i++) {
     const target = this[i].dataset.target;
     Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).click(evt => {
@@ -134,25 +134,87 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.modal = function () {
       Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(target).fadeIn(500);
       document.body.style.overflow = 'hidden';
     });
-  }
+    const closeElements = document.querySelectorAll(`${target} [data-close]`);
+    closeElements.forEach(elem => {
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(elem).click(evt => {
+        if (evt.target) {
+          evt.preventDefault();
+        }
 
-  const closeElements = document.querySelectorAll('[data-close]');
-  closeElements.forEach(elem => {
-    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(elem).click(evt => {
-      if (evt.target) {
-        evt.preventDefault();
+        Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(target).fadeOut(500);
+        document.body.style.overflow = '';
+
+        if (isCreated) {
+          document.querySelector(target).remove();
+        }
+      });
+    });
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(target).click(function (evt) {
+      if (evt.target === this) {
+        Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this).fadeOut(500);
+        document.body.style.overflow = '';
+
+        if (isCreated) {
+          document.querySelector(target).remove();
+        }
+      }
+    });
+  }
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.createModal = function ({
+  text,
+  btns
+} = {}) {
+  for (let i = 0; i < this.length; i++) {
+    let modal = document.createElement('div');
+    modal.classList.add('modal');
+    modal.setAttribute('id', this[i].getAttribute('data-target').slice(1)); // btns = {count: num, settings = [ [text, classNames=[], close, cb], [...] ]}
+
+    const buttons = [];
+
+    for (let j = 0; j < btns.count; j++) {
+      const btn = document.createElement('button');
+      const btnSettings = btns.settings[j];
+      btn.classList.add('btn', ...btnSettings[1]);
+      btn.textContent = btnSettings[0];
+
+      if (btnSettings[2]) {
+        btn.setAttribute('data-close', 'true');
       }
 
-      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('.modal').fadeOut(500);
-      document.body.style.overflow = '';
-    });
-  });
-  Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('.modal').click(function (evt) {
-    if (evt.target === this) {
-      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this).fadeOut(500);
-      document.body.style.overflow = '';
+      if (btnSettings[3] && typeof btnSettings[3] === 'function') {
+        btn.addEventListener('click', btnSettings[3]);
+      }
+
+      buttons.push(btn);
     }
-  });
+
+    modal.innerHTML = `
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button class="close" data-close>
+                        <span>&times;</span>
+                    </button>
+                    <div class="modal-header">
+                        <div class="modal-title">
+                            ${text.title}
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        ${text.body}
+                    </div>
+                    <div class="modal-footer">
+                        
+                    </div>
+                </div>
+            </div>
+        `;
+    modal.querySelector(".modal-footer").append(...buttons);
+    document.body.append(modal);
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).modal(true);
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i].getAttribute('data-target')).fadeIn(500);
+  }
 };
 
 Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('[data-toggle="modal"]').modal();
@@ -673,6 +735,22 @@ Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.wrap').html(`
     </div>
 `);
 Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.dropdown-toggle').dropdown();
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').click(() => {
+  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').createModal({
+    text: {
+      title: 'Modal title',
+      body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem cupiditate voluptate eveniet ratione nesciunt esse asperiores odit harum? Facere inventore delectus quisquam accusamus, iure officiis eligendi harum a veritatis deserunt?'
+    },
+    btns: {
+      count: 3,
+      settings: [['Close', ['btn-danger', 'mr-10'], true], ['Save changes', ['btn-success'], false, () => {
+        alert('Data saved');
+      }], ['Another btn', ['btn-warning', 'ml-10'], false, () => {
+        alert('Test action!!!');
+      }]]
+    }
+  });
+});
 
 /***/ })
 
